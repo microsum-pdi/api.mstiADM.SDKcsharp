@@ -19,20 +19,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Flunt" Version="2.0.5" />
 		<PackageReference Include="NJsonSchema" Version="11.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="MessagePack" Version="2.5.172" />
 		<PackageReference Include="MessagePack.Annotations" Version="2.5.172" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Constantes\" />
-	  <Folder Include="Domain\" />
-	  <Folder Include="Extensions\" />
-	  <Folder Include="Resources\" />
-	  <Folder Include="Services\" />
+		<PackageReference Include="MongoDB.Driver" Version="2.27.0" />
+		<PackageReference Include="NSwag.Annotations" Version="14.1.0" />
 	</ItemGroup>
 
 </Project>

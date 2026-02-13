@@ -16,7 +16,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels.AuxiliaresPackVM
         public string Descricao { get; set; }
 
         [Key(3)]
-        public ESituacao Situacao { get; set; }
+        public ETABPDSituacao Situacao { get; set; }
 
         [Key(4)]
         public int SYSVER { get; set; }

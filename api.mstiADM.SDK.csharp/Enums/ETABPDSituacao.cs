@@ -1,9 +1,8 @@
 ﻿namespace api.mstiADM.SDK.csharp.Enums
 {
-    public enum ESituacao
+    public enum ETABPDSituacao
     {
         ATIVO,
-        INATIVO,
-        NEGATIVO
+        INATIVO
     }
 }

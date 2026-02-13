@@ -7,7 +7,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels.TabelasAuxiliares
         public string Id { get; set; }
         public string Codigo { get; set; }
         public string Descricao { get; set; }
-        public ESituacao Situacao { get; set; }
+        public ETABPDSituacao Situacao { get; set; }
         public int SYSVER { get; set; }
 
         public void AplicaTransformacoes()
