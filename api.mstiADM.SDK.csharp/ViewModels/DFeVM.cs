@@ -1,5 +1,6 @@
 ﻿using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
@@ -7,6 +8,9 @@ namespace api.mstiADM.SDK.csharp.ViewModels
     /// Configuração da API DF-e
     /// </summary>    
     [BsonIgnoreExtraElements]
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     public class DFeVM : DadosAmbienteVM
     {
         public DFeVM()

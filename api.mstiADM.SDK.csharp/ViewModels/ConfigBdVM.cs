@@ -1,12 +1,16 @@
 ﻿using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using MongoDB.Bson.Serialization.Attributes;
 using NSwag.Annotations;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
     [BsonIgnoreExtraElements]
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     public class ConfigBdVM
     {
         public string host { get; set; }

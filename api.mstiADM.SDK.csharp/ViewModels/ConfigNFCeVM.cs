@@ -2,12 +2,16 @@
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using NJsonSchema.Annotations;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
     /// <summary> 
     /// Configuração do ambiente do cliente, para envio da NFC-e 
     /// </summary> 
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     [BsonIgnoreExtraElements]
     [System.Serializable()]
     public class ConfigNFCeVM : ConfigDFeVM

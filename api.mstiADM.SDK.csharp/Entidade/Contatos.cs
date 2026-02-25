@@ -1,7 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.Entidade
 {
+    [ClassInterface(ClassInterfaceType.None)]
     public class Contatos : EntidadeBase
     {
         [BsonElement("Telefone")]

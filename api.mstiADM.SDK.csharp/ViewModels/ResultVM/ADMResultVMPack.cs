@@ -2,9 +2,11 @@
 using MessagePack;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels.ResultVM
 {
+    [ClassInterface(ClassInterfaceType.None)]
     [MessagePackObject]
     public class ADMResultVMPack<T>
     {

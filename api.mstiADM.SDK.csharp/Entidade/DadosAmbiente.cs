@@ -1,8 +1,11 @@
-﻿namespace api.mstiADM.SDK.csharp.Entidade
+﻿using System.Runtime.InteropServices;
+
+namespace api.mstiADM.SDK.csharp.Entidade
 {
     /// <summary>
     /// Essa classe foi feita para configurações do ambiente de cada API
     /// </summary>
+    [ClassInterface(ClassInterfaceType.None)]
     public abstract class DadosAmbiente
     {
         /// <summary>

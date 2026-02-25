@@ -7,9 +7,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.Entidade
 {
+    [ClassInterface(ClassInterfaceType.None)]
     public class Cliente : Notificavel
     {
 

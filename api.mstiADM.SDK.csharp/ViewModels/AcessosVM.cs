@@ -1,5 +1,10 @@
-﻿namespace api.mstiADM.SDK.csharp.ViewModels
+﻿using System.Runtime.InteropServices;
+
+namespace api.mstiADM.SDK.csharp.ViewModels
 {
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     public class AcessosApiVM
     {
        // public bool AcessoApiADM { get; private set; }

@@ -1,7 +1,11 @@
 ﻿using NJsonSchema.Annotations;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     [JsonSchemaExtensionData("example",
 	@"{
 	  ""CodigoRevenda"": ""1"",

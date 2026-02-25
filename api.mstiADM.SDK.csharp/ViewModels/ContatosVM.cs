@@ -1,9 +1,13 @@
 ﻿using api.mstiADM.SDK.csharp.Entidade;
 using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using MongoDB.Bson.Serialization.Attributes;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     [BsonIgnoreExtraElements]
     public class ContatosVM
     {

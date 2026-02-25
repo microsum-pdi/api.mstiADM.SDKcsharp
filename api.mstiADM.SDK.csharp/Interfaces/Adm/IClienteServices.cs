@@ -1,5 +1,4 @@
 ﻿using api.mstiADM.SDK.csharp.ViewModels;
-using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using api.mstiADM.SDK.csharp.ViewModels.ResultVM;
 using System.Threading.Tasks;
 
@@ -7,11 +6,16 @@ namespace api.mstiADM.SDK.csharp.Interfaces.Adm
 {
     public interface IClienteServices
     {
-        Task<ADMResultVMPack<ClienteVMPack>> GetClienteFastByToken(string token);
-        Task<ADMResultVM<UsuarioVM>> GetUsuariosDoCliente(string token);
-        Task<ADMResultVMPack<ClienteCertificadoVMPack>> AtualizaCertificadoDigital(string tokenDoCliente, string senha, byte[] certificadoDigital, string nomeArquivo);
-        Task<ADMResultVMPack<ClienteCertificadoVMPack>> GetCertificadoDigital(string tokenDoCliente);
+        Task<ADMResultVM<ClienteVM>> ObterCliente(string token);
+
+        Task<ADMResultVM<UsuarioVM>> ObterUsuariosDoCliente(string token);
+
+        Task<ADMResultVM<ClienteCertificadoVM>> AtualizaCertificadoDigital(string tokenDoCliente, string senha, byte[] certificadoDigital);
+        
+        Task<ADMResultVM<ClienteCertificadoVM>> ObterCertificadoDigital(string tokenDoCliente);
+        
         Task<ADMResultVM<string>> AtualizaLogotipo(string tokenDoCliente, string strB64Logotipo);
+        
         Task<ADMResultVM<ClienteVM>> AtualizarClienteParcial(string tokenDoCliente, AtualizaClienteParcialVM cliente);
     }
 }

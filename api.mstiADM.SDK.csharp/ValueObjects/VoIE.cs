@@ -1,9 +1,11 @@
 ﻿using api.mstiADM.SDK.csharp.Entidade;
 using api.mstiADM.SDK.csharp.Resources;
 using System;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ValueObjects
 {
+    [ClassInterface(ClassInterfaceType.None)]
     public class VoIE : Notificavel
     {
         private string strIE { get; set; }

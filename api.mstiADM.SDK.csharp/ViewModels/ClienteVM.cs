@@ -7,9 +7,13 @@ using NJsonSchema.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     [BsonIgnoreExtraElements]
     [JsonSchemaExtensionData("example",
   @"{
@@ -113,9 +117,12 @@ namespace api.mstiADM.SDK.csharp.ViewModels
 
         public string DI { get; set; }
 
+        [ComVisible(false)]
+
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public ICollection<ClienteTokenVM> Tokens { get; set; } = new List<ClienteTokenVM>();
 
+        [ComVisible(false)]
         [System.Xml.Serialization.XmlIgnoreAttribute()]
         public ICollection<ClienteWebHookVM> WebHooks { get; set; } = new List<ClienteWebHookVM>();
 
@@ -152,6 +159,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
             return token.HashToken;
         }
 
+        [ComVisible(false)]
         public void SetListToken(ICollection<ClienteTokenVM> tokenVMs)
         {
             this.Tokens = tokenVMs;

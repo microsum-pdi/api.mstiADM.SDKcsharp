@@ -1,10 +1,12 @@
 ﻿using api.mstiADM.SDK.csharp.Entidade;
 using api.mstiADM.SDK.csharp.Resources;
 using System;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace api.mstiADM.SDK.csharp.ValueObjects
 {
+    [ClassInterface(ClassInterfaceType.None)]
     public class VoCPF : Notificavel
     {
         private string strCPF { get; set; }

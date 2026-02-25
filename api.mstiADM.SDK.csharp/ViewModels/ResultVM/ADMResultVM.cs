@@ -2,10 +2,12 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels.ResultVM
 {
-    public class ADMResultVM<T> : List<T>
+    [ClassInterface(ClassInterfaceType.None)]
+    public class ADMResultVM<T>
     {
         #region Propriedades
         /// <summary>

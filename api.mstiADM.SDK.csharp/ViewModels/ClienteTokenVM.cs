@@ -1,13 +1,14 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
+    [ComVisible(false)]
     [BsonIgnoreExtraElements]
     public class ClienteTokenVM
     {
-
         public string Token { get; set; }
 
         [JsonIgnore]

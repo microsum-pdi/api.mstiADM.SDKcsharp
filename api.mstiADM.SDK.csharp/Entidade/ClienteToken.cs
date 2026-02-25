@@ -1,8 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.Entidade
 {
+    [ClassInterface(ClassInterfaceType.None)]
     public class ClienteToken : EntidadeBase
     {
         [BsonElement("HashToken")]

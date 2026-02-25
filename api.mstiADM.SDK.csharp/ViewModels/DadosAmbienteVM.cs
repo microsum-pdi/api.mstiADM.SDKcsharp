@@ -1,8 +1,12 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
     [BsonIgnoreExtraElements]
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     public abstract class DadosAmbienteVM
     {
         public bool Ativo { get; set; }

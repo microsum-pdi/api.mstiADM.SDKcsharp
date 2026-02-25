@@ -4,11 +4,15 @@ using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [AutoGuid]
     public class ClienteCertificadoVM
     {
         /// <summary>
@@ -36,6 +40,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         /// </summary>
         /// <param name="certificadoDigital"></param>
         /// <param name="senhaCertificado"></param>
+        [ComVisible(false)]
         public async Task InstanciaCertificado(IFormFile certificadoDigital, string senhaCertificado)
         {
             X509Certificate2 certificado = null;

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace api.mstiADM.SDK.csharp.ViewModels.ResultVM
 {
+    [ClassInterface(ClassInterfaceType.None)]
     public class ADMMstiList<T> : List<T>
     {
         /// <summary> 

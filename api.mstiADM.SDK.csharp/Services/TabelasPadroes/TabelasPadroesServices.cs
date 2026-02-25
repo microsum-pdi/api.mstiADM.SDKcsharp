@@ -1,17 +1,51 @@
 ﻿using api.mstiADM.SDK.csharp.Enums;
+using api.mstiADM.SDK.csharp.Extensions;
+using api.mstiADM.SDK.csharp.Interfaces.Adm;
 using api.mstiADM.SDK.csharp.ViewModels;
+using api.mstiADM.SDK.csharp.ViewModels.Config;
 using api.mstiADM.SDK.csharp.ViewModels.ResultVM;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace api.mstiADM.SDK.csharp.Interfaces.Adm
+namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
 {
-    public interface ITabelasPadroesServices
+    public class TabelasPadroesServices : GenericServices, ITabelasPadroesServices
     {
+        public TabelasPadroesServices(ConfigAmbienteSDK configAmbienteSDK) : base(configAmbienteSDK)
+        {
+        }
+
+
+
         /// <summary>
         /// Verifica se o código está cadastrado na respectiva tabela padrão
         /// </summary>
-        Task<bool> VerificaExistenciaRegistro(ENomeTabela tabela, string codigo);
+        public async Task<bool> VerificaExistenciaRegistro(ENomeTabela tabela, string codigo)
+        {
+            string url = configAmbienteSDK.URL + $"/api/admui/TabelasPadroes/verificaexistencia/{tabela}/{codigo}";
+
+            try
+            {
+                HttpResponseMessage response = await ExecutaGet(url);
+
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                var resposta = JsonConvert.DeserializeObject<bool>(responseBody);                
+
+                return resposta;
+            }
+            catch (Exception ex)
+            {
+                string DetalheErro = "";
+                DetalheErro += "Erro ao obter verificar existência de registro na tabela padrão." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
+                DetalheErro += "Url: " + url + "\n";
+
+                throw new Exception(DetalheErro);
+            }
+        }
 
         /// <summary>
         /// Permite obter dados sobre os registro na API
@@ -21,7 +55,42 @@ namespace api.mstiADM.SDK.csharp.Interfaces.Adm
         /// <para></para>
         /// A atualização pode ser realizada por meio do endpoint 'api/tabelaspadroes/atualizacao/{tabela}/{SYSVER}'
         /// </remarks>
-        Task<ADMResultVM<TABPDCheckAndUpdateResponseVM>> GetAtualizacoes(List<TABPDCheckAndUpdateRequestVM> request);
+        public async Task<ADMResultVM<TABPDCheckAndUpdateResponseVM>> GetAtualizacoes(List<TABPDCheckAndUpdateRequestVM> request)
+        {
+            string url = configAmbienteSDK.URL + $"/api/admui/tabelaspadroes/atualizacao";
+
+            ADMResultVM<TABPDCheckAndUpdateResponseVM> result = new ADMResultVM<TABPDCheckAndUpdateResponseVM>();
+
+            try
+            {
+                HttpResponseMessage response = await ExecutaPost(request, url);
+
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<TABPDCheckAndUpdateResponseVM>>(responseBody);
+
+                if (resposta == null)
+                {
+                    result
+                        .WithStatusCode(ADMEHttpStatusCode.BadRequest)
+                        .WithMessage("Não foi possível verificar a necessidade de atualização das tabelas padrões.");
+                }
+                else
+                {
+                    result = resposta;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                string DetalheErro = "";
+                DetalheErro += "Erro ao verificar a necessidade de atualização das tabelas padrões." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
+                DetalheErro += "Url: " + url + "\n";
+
+                throw new Exception(DetalheErro);
+            }
+        }
 
         /// <summary>
         /// Permite obter todos os registros de uma determinada tabela.
@@ -61,6 +130,33 @@ namespace api.mstiADM.SDK.csharp.Interfaces.Adm
         ///  | Outros (Genéricos)                | TABPDBaseVM                                      |
         /// </remarks>
         /// <returns>Retorna os dados da tabela solicitada</returns>
-        Task<ADMResultVM<T>> GetAtualizacoes<T>(ENomeTabela tabela, int sysver = 0, int limit = 0, int skip = 0);
+        public async Task<ADMResultVM<T>> GetAtualizacoes<T>(ENomeTabela tabela, int sysver = 0, int limit = 0, int skip = 0)
+        {
+            string url = configAmbienteSDK.URL + $"/api/admui/tabelaspadroes/atualizacao/{tabela}/{sysver}?limit={limit}&skip={skip}";
+
+            try
+            {
+                HttpResponseMessage response = await ExecutaGet(url);
+
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<T>>(responseBody);
+
+                if (resposta != null)
+                {                    
+                    return resposta;
+                }
+
+                return default;
+            }
+            catch (Exception ex)
+            {
+                string DetalheErro = "";
+                DetalheErro += "Erro ao consultar informações das tabelas padrões." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
+                DetalheErro += "Url: " + url + "\n";
+
+                throw new Exception(DetalheErro);
+            }
+        }
     }
 }

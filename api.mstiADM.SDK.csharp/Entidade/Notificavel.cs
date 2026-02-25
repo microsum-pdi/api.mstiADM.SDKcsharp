@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace api.mstiADM.SDK.csharp.Entidade
 {
+    [ClassInterface(ClassInterfaceType.None)]
     [ApiExplorerSettings(IgnoreApi = true)]
     public class Notificavel : Notifiable<Notification>
     {
