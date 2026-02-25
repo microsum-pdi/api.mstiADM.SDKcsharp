@@ -25,7 +25,7 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
         /// </summary>
         public async Task<bool> VerificaExistenciaRegistro(ENomeTabela tabela, string codigo)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/TabelasPadroes/verificaexistencia/{tabela}/{codigo}";
+            string url = configAmbienteSDK.URL + $"/admui/api/TabelasPadroes/verificaexistencia/{tabela}/{codigo}";
 
             try
             {
@@ -57,7 +57,7 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
         /// </remarks>
         public async Task<ADMResultVM<TABPDCheckAndUpdateResponseVM>> GetAtualizacoes(List<TABPDCheckAndUpdateRequestVM> request)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/tabelaspadroes/atualizacao";
+            string url = configAmbienteSDK.URL + $"/admui/api/tabelaspadroes/atualizacao";
 
             ADMResultVM<TABPDCheckAndUpdateResponseVM> result = new ADMResultVM<TABPDCheckAndUpdateResponseVM>();
 
@@ -132,7 +132,7 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
         /// <returns>Retorna os dados da tabela solicitada</returns>
         public async Task<ADMResultVM<T>> GetAtualizacoes<T>(ENomeTabela tabela, int sysver = 0, int limit = 0, int skip = 0)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/tabelaspadroes/atualizacao/{tabela}/{sysver}?limit={limit}&skip={skip}";
+            string url = configAmbienteSDK.URL + $"/admui/api/tabelaspadroes/atualizacao/{tabela}/{sysver}?limit={limit}&skip={skip}";
 
             try
             {

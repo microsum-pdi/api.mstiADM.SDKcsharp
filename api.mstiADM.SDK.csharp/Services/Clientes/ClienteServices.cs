@@ -23,7 +23,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="token">Token do cliente da API</param>
         public async Task<ADMResultVM<ClienteVM>> ObterCliente(string token)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/clientefast/{Uri.EscapeDataString(token)}";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}";
 
             ADMResultVM<ClienteVM> result = new ADMResultVM<ClienteVM>();
 
@@ -64,7 +64,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="token">Token do cliente da API</param>
         public async Task<ADMResultVM<UsuarioVM>> ObterUsuariosDoCliente(string token)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/clientefast/{Uri.EscapeDataString(token)}/usuarios";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}/usuarios";
 
             ADMResultVM<UsuarioVM> result = new ADMResultVM<UsuarioVM>();
 
@@ -113,7 +113,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
                 { new ByteArrayContent(certificadoDigital), "certificadoDigital", "certificadoDigital" }
             };
 
-            string url = configAmbienteSDK.URL + $"/api/admui/clientefast/{token}/atualiza_certificado_digital";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualiza_certificado_digital";
 
             ADMResultVM<ClienteCertificadoVM> result = new ADMResultVM<ClienteCertificadoVM>();
 
@@ -159,7 +159,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="token">Token do cliente</param>
         public async Task<ADMResultVM<ClienteCertificadoVM>> ObterCertificadoDigital(string token)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/clientefast/{token}/get_certificado_digital";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/get_certificado_digital";
 
             ADMResultVM<ClienteCertificadoVM> result = new ADMResultVM<ClienteCertificadoVM>();
 
@@ -201,7 +201,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="strB64Logotipo">B64 do logotipo</param>
         public async Task<ADMResultVM<string>> AtualizaLogotipo(string token, string strB64Logotipo)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/clientefast/{token}/atualiza_logotipo";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualiza_logotipo";
 
             ADMResultVM<string> result = new ADMResultVM<string>();
 
@@ -243,7 +243,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// </summary>
         public async Task<ADMResultVM<ClienteVM>> AtualizarClienteParcial(string token, AtualizaClienteParcialVM cliente)
         {
-            string url = configAmbienteSDK.URL + $"/api/admui/clientefast/{token}/atualizarcliente";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualizarcliente";
 
             ADMResultVM<ClienteVM> result = new ADMResultVM<ClienteVM>();
 
