@@ -31,7 +31,7 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
             {
                 HttpResponseMessage response = await ExecutaGet(url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<bool>(responseBody);                
 
@@ -65,7 +65,7 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
             {
                 HttpResponseMessage response = await ExecutaPost(request, url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<TABPDCheckAndUpdateResponseVM>>(responseBody);
 
@@ -138,7 +138,7 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
             {
                 HttpResponseMessage response = await ExecutaGet(url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<T>>(responseBody);
 

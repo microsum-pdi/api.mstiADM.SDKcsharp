@@ -7,7 +7,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
     [ClassInterface(ClassInterfaceType.AutoDual)]
     [AutoGuid]
     [JsonSchemaExtensionData("example",
-	@"{
+    @"{
 	  ""CodigoRevenda"": ""1"",
 	  ""NomeRazaoSocial"": ""Microsum Tecnologia da Informação Ltda"",
 	  ""Pessoa"": ""JURÍDICA"",
@@ -41,6 +41,12 @@ namespace api.mstiADM.SDK.csharp.ViewModels
 	}")]
     public class AtualizaClienteParcialVM
     {
+        public AtualizaClienteParcialVM()
+        {
+            Contatos = new ContatosVM();
+            Endereco = new EnderecoVM();
+        }
+
         public string CodigoRevenda { get; set; }
         public string NomeRazaoSocial { get; set; }
         public string Pessoa { get; set; }

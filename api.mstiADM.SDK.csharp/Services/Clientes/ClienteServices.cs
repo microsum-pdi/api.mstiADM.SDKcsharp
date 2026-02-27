@@ -4,8 +4,10 @@ using api.mstiADM.SDK.csharp.Interfaces.Adm;
 using api.mstiADM.SDK.csharp.ViewModels;
 using api.mstiADM.SDK.csharp.ViewModels.Config;
 using api.mstiADM.SDK.csharp.ViewModels.ResultVM;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -13,6 +15,11 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 {
     public class ClienteServices : GenericServices, IClienteServices
     {
+        JsonSerializerSettings jsonSerializerSettings = new JsonSerializerSettings
+        {
+            DateFormatString = "dd/MM/yyyy HH:mm:ss"
+        };
+
         public ClienteServices(ConfigAmbienteSDK configAmbienteSDK) : base(configAmbienteSDK)
         {
         }
@@ -31,9 +38,9 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             {
                 HttpResponseMessage response = await ExecutaGet(url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody);
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody, jsonSerializerSettings);
 
                 if (resposta == null)
                 {
@@ -72,7 +79,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             {
                 HttpResponseMessage response = await ExecutaGet(url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(responseBody);
 
@@ -99,12 +106,14 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             }
         }
 
+
+
         /// <summary>
         /// Permite atualização do certificado digital do cliente
         /// </summary>
         /// <param name="token">Token do cliente</param>
-        /// <param name="senha">senha do certificado digital</param>
-        /// <param name="certificadoDigital">certificado digital</param>
+        /// <param name="senha">Senha do certificado digital</param>
+        /// <param name="certificadoDigital">Array de bytes do certificado digital</param>
         public async Task<ADMResultVM<ClienteCertificadoVM>> AtualizaCertificadoDigital(string token, string senha, byte[] certificadoDigital)
         {
             var content = new MultipartFormDataContent
@@ -126,7 +135,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
                 request.Headers.Add("x-api-key", configAmbienteSDK.Token);
                 HttpResponseMessage response = await configAmbienteSDK.HttpClient.SendAsync(request);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteCertificadoVM>>(responseBody);
 
@@ -153,6 +162,32 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             }
         }
 
+        private async Task<byte[]> ConverterParaBytes(IFormFile certificadoDigital)
+        {
+            if (certificadoDigital == null || certificadoDigital.Length == 0)
+                return null;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                // Copia o conteúdo do arquivo para o stream de memória
+                await certificadoDigital.CopyToAsync(memoryStream);
+
+                // Retorna o array de bytes
+                return memoryStream.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Permite atualização do certificado digital do cliente
+        /// </summary>
+        /// <param name="token">Token do cliente</param>
+        /// <param name="senha">senha do certificado digital</param>
+        /// <param name="certificadoDigital">IFormFile do certificado digital</param>
+        public async Task<ADMResultVM<ClienteCertificadoVM>> AtualizaCertificadoDigital(string token, string senha, IFormFile certificadoDigital)
+        {
+            return await AtualizaCertificadoDigital(token, senha, await ConverterParaBytes(certificadoDigital));
+        }
+
         /// <summary>
         /// Recupera informações sobre o do certificado digital do cliente
         /// </summary>
@@ -167,7 +202,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             {
                 HttpResponseMessage response = await ExecutaGet(url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteCertificadoVM>>(responseBody);
 
@@ -209,7 +244,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             {
                 HttpResponseMessage response = await ExecutaPut(strB64Logotipo, url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<string>>(responseBody);
 
@@ -251,9 +286,9 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             {
                 HttpResponseMessage response = await ExecutaPut(cliente, url);
 
-                string responseBody = response.Content.ReadAsStringAsync().Result;
+                string responseBody = await response.Content.ReadAsStringAsync();
 
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody);
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody, jsonSerializerSettings);
 
                 if (resposta == null)
                 {
