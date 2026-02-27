@@ -156,7 +156,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
                 return "";
 
             }
-            return token.HashToken;
+            return token.Token;
         }
 
         [ComVisible(false)]
