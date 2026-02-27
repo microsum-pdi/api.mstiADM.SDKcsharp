@@ -12,7 +12,10 @@ namespace api.mstiADM.SDK.csharp.Extensions
         /// <returns></returns>
         public static HttpClient AddXApiKey(this HttpClient cliente, string token)
         {
-            cliente.DefaultRequestHeaders.Add("x-api-key", token);
+            if (!cliente.DefaultRequestHeaders.Contains("x-api-key"))
+            {
+                cliente.DefaultRequestHeaders.Add("x-api-key", token);
+            }
             return cliente;
         }
     }

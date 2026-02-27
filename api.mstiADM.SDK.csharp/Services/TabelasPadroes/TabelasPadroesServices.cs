@@ -18,8 +18,6 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
         {
         }
 
-
-
         /// <summary>
         /// Verifica se o código está cadastrado na respectiva tabela padrão
         /// </summary>
