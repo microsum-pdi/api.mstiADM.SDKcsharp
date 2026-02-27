@@ -17,7 +17,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         [JsonIgnore]
         public string AesToken { get; set; }
 
-        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        [ComVisible(false)]
         public DateTime Geracao { get; set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
