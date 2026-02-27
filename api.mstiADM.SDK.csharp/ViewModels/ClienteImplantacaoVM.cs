@@ -1,4 +1,5 @@
-﻿using api.mstiADM.SDK.csharp.Enums;
+﻿using api.mstiADM.SDK.csharp.Entidade;
+using api.mstiADM.SDK.csharp.Enums;
 using api.mstiADM.SDK.csharp.Extensions;
 using MongoDB.Bson.Serialization.Attributes;
 using NJsonSchema.Annotations;
@@ -77,6 +78,15 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         public HubVM HUB { get; set; }
 
         public EfdVM EFD { get; set; }
+
+        public ClienteImplantacaoVM()
+        {
+            DFE = new DFeVM();
+            PAY = new PayVM();
+            TAX = new TaxVM();
+            HUB = new HubVM();
+            EFD = new EfdVM();
+        }
 
         public ClienteVM ToClienteVM()
         {

@@ -11,7 +11,6 @@ namespace api.mstiADM.SDK.csharp.ViewModels
     {
         public string Token { get; set; }
 
-        [JsonIgnore]
         public string HashToken { get; set; }
 
         [JsonIgnore]
