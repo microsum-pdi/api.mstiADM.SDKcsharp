@@ -107,11 +107,11 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         }
 
         /// <summary>
-        /// Lista os usuários relacionados ao cliente
+        /// Obtem um usuário de um cliente por meio do email e senha
         /// </summary>
         /// <param name="token">Token do cliente da API</param>
-        /// <param name="email">email do usuário</param>
-        /// <param name="senha">senha do usuário</param>
+        /// <param name="email">Email do usuário</param>
+        /// <param name="senha">Senha do usuário</param>
         public async Task<ADMResultVM<UsuarioVM>> ObterUsuarioDoClientePorEmailSenha(string token, string email, string senha)
         {
             string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}/usuarios/{email}/{senha}";
