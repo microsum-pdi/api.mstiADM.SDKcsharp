@@ -106,7 +106,48 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             }
         }
 
+        /// <summary>
+        /// Lista os usuários relacionados ao cliente
+        /// </summary>
+        /// <param name="token">Token do cliente da API</param>
+        /// <param name="email">email do usuário</param>
+        /// <param name="senha">senha do usuário</param>
+        public async Task<ADMResultVM<UsuarioVM>> ObterUsuarioDoClientePorEmailSenha(string token, string email, string senha)
+        {
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}/usuarios/{email}/{senha}";
 
+            ADMResultVM<UsuarioVM> result = new ADMResultVM<UsuarioVM>();
+
+            try
+            {
+                HttpResponseMessage response = await ExecutaGet(url);
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(responseBody);
+
+                if (resposta == null)
+                {
+                    result
+                        .WithStatusCode(ADMEHttpStatusCode.BadRequest)
+                        .WithMessage("Não foi possível obter os usuarios do cliente através do token.");
+                }
+                else
+                {
+                    result = resposta;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                string DetalheErro = "";
+                DetalheErro += "Erro ao obter os usuários do cliente através do token." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
+                DetalheErro += "Url: " + url + "\n";
+
+                throw new Exception(DetalheErro);
+            }
+        }
 
         /// <summary>
         /// Permite atualização do certificado digital do cliente
