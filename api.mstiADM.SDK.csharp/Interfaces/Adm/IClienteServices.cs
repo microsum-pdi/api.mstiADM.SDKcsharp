@@ -11,7 +11,7 @@ namespace api.mstiADM.SDK.csharp.Interfaces.Adm
 
         Task<ADMResultVM<UsuarioVM>> ObterUsuariosDoCliente(string token);
 
-        Task<ADMResultVM<UsuarioVM>> ObterUsuarioDoClientePorEmailSenha(string token, string email, string senha);
+        Task<ADMResultVM<ClienteVM>> ObterClientePorCpfCnpjEmailSenha(string CpfCnpj, string Email, string Senha);
 
         Task<ADMResultVM<ClienteCertificadoVM>> AtualizaCertificadoDigital(string tokenDoCliente, string senha, byte[] certificadoDigital);
 

@@ -81,7 +81,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(responseBody);
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(responseBody, jsonSerializerSettings);
 
                 if (resposta == null)
                 {
@@ -107,16 +107,16 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         }
 
         /// <summary>
-        /// Obtem um usuário de um cliente por meio do email e senha
+        /// Obtém dados de um cliente por meio do CpfCnpj, Email e Senha
         /// </summary>
-        /// <param name="token">Token do cliente da API</param>
-        /// <param name="email">Email do usuário</param>
-        /// <param name="senha">Senha do usuário</param>
-        public async Task<ADMResultVM<UsuarioVM>> ObterUsuarioDoClientePorEmailSenha(string token, string email, string senha)
+        /// <param name="CpfCnpj">CpfCnpj do cliente da API</param>
+        /// <param name="Email">Email do usuário</param>
+        /// <param name="Senha">Senha do usuário</param>
+        public async Task<ADMResultVM<ClienteVM>> ObterClientePorCpfCnpjEmailSenha(string CpfCnpj, string Email, string Senha)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}/usuarios/{email}/{senha}";
+            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(CpfCnpj)}/usuario/{Uri.EscapeDataString(Email)}/{Uri.EscapeDataString(Senha)}";
 
-            ADMResultVM<UsuarioVM> result = new ADMResultVM<UsuarioVM>();
+            ADMResultVM<ClienteVM> result = new ADMResultVM<ClienteVM>();
 
             try
             {
@@ -124,13 +124,13 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(responseBody);
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody, jsonSerializerSettings);
 
                 if (resposta == null)
                 {
                     result
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
-                        .WithMessage("Não foi possível obter os usuarios do cliente através do token.");
+                        .WithMessage("Não foi possível obter os dados do cliente através do CpfCnpj, Email e Senha.");
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             catch (Exception ex)
             {
                 string DetalheErro = "";
-                DetalheErro += "Erro ao obter os usuários do cliente através do token." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
+                DetalheErro += "Erro ao obter os dados do cliente através do CpfCnpj." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
                 DetalheErro += "Url: " + url + "\n";
 
                 throw new Exception(DetalheErro);
