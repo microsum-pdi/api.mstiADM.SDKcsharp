@@ -64,7 +64,6 @@ namespace api.mstiADM.SDK.csharp.ViewModels
           },
          ""HUB"":{
             ""Ativo"": false,
-            ""LimiteCanais"": 2,
             ""configBD"": {
               ""host"": ""SERVER\\SQL2019PDI"",
               ""porta"": ""1433""
