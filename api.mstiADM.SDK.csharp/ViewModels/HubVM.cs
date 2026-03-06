@@ -13,8 +13,6 @@ namespace api.mstiADM.SDK.csharp.ViewModels
     [AutoGuid]
     public class HubVM : DadosAmbienteVM
     {
-        public int LimiteCanais { get; set; }
-
         public HubVM()
         {
             this.configBD = new ConfigBdVM();
@@ -26,7 +24,6 @@ namespace api.mstiADM.SDK.csharp.ViewModels
             {
                 Ativo = this.Ativo,
                 ImplantacaoExecutada = ImplantacaoExecutada,
-                LimiteCanais = this.LimiteCanais,
                 configBD = configBD.ToConfigBdVMPack()
             };
         }
