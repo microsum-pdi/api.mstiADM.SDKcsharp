@@ -104,50 +104,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 
                 throw new Exception(DetalheErro);
             }
-        }
-
-        /// <summary>
-        /// Obtém dados de um cliente por meio do CpfCnpj, Email e Senha
-        /// </summary>
-        /// <param name="CpfCnpj">CpfCnpj do cliente da API</param>
-        /// <param name="Email">Email do usuário</param>
-        /// <param name="Senha">Senha do usuário</param>
-        public async Task<ADMResultVM<ClienteVM>> ObterClientePorCpfCnpjEmailSenha(string CpfCnpj, string Email, string Senha)
-        {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(CpfCnpj)}/usuario/{Uri.EscapeDataString(Email)}/{Uri.EscapeDataString(Senha)}";
-
-            ADMResultVM<ClienteVM> result = new ADMResultVM<ClienteVM>();
-
-            try
-            {
-                HttpResponseMessage response = await ExecutaGet(url);
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody, jsonSerializerSettings);
-
-                if (resposta == null)
-                {
-                    result
-                        .WithStatusCode(ADMEHttpStatusCode.BadRequest)
-                        .WithMessage("Não foi possível obter os dados do cliente através do CpfCnpj, Email e Senha.");
-                }
-                else
-                {
-                    result = resposta;
-                }
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                string DetalheErro = "";
-                DetalheErro += "Erro ao obter os dados do cliente através do CpfCnpj." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
-                DetalheErro += "Url: " + url + "\n";
-
-                throw new Exception(DetalheErro);
-            }
-        }
+        }        
 
         /// <summary>
         /// Permite atualização do certificado digital do cliente
