@@ -1,4 +1,5 @@
-﻿using api.mstiADM.SDK.csharp.Enums;
+﻿using api.mstiADM.SDK.csharp.Entidade;
+using api.mstiADM.SDK.csharp.Enums;
 using api.mstiADM.SDK.csharp.Extensions;
 using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM._Base;
