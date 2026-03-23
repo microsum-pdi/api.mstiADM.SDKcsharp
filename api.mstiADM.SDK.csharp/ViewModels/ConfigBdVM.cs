@@ -8,9 +8,7 @@ using System.Text.Json.Serialization;
 namespace api.mstiADM.SDK.csharp.ViewModels
 {
     [BsonIgnoreExtraElements]
-    [ComVisible(true)]
-    [ClassInterface(ClassInterfaceType.AutoDual)]
-    [AutoGuid]
+    [ComVisible(false)]
     public class ConfigBdVM
     {
         public string host { get; set; }
