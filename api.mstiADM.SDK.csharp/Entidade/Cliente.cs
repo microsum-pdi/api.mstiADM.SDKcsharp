@@ -131,6 +131,12 @@ namespace api.mstiADM.SDK.csharp.Entidade
 
         [BsonElement("TAX")]
         public TAX TAX { get; private set; }
+
+        [BsonElement("Situacao")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        [BsonRepresentation(BsonType.String)]
+        public EEntidadeSituacao Situacao { get; private set; }
+
         #endregion
 
         public Cliente()
@@ -140,7 +146,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
         public Cliente(string Id, string Codigo, long CodigoRevenda, string NomeRazaoSocial, string ApelidoFantasia, EContribuinte Contribuinte,
                        string DI, EPessoa Pessoa, string CPFCNPJ, string IE, string IM, Endereco endereco, Contatos contatos,
                        string LogotipoB64, ICollection<ClienteToken> Tokens, ICollection<ClienteWebHook> WebHooks,
-                       ClienteCertificado Certificado, DFe DFe, PAY PAY, HUB HUB, EFD EFD, TAX TAX)
+                       ClienteCertificado Certificado, DFe DFe, PAY PAY, HUB HUB, EFD EFD, TAX TAX, EEntidadeSituacao situacao)
         {
             this.Id = Id;
             this.Codigo = long.Parse(Codigo);
@@ -184,6 +190,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
             this.HUB = HUB ?? new HUB();
             this.EFD = EFD ?? new EFD();
             this.TAX = TAX ?? new TAX();
+            Situacao = situacao;
 
             if (this.Certificado != null)
             {
@@ -198,6 +205,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
             }
 
             ValidaCpfCnpj();
+          
         }
 
         private void ValidaCpfCnpj()

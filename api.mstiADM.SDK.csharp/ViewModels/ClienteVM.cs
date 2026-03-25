@@ -24,6 +24,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
           ""ApelidoFantasia"": ""Microsum"",
           ""Contribuinte"": ""NÃO"",
           ""RG"": """",
+          ""Situacao"": ""ATIVO"",
 		  ""Contatos"": {
 			  ""Telefone"": ""(62) 3239-8000"",
 			  ""Celular"": """",
@@ -147,6 +148,8 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         public string NomeRevenda { get; set; }
 
         public string ApelidoRevenda { get; set; }
+
+        public EEntidadeSituacao Situacao { get; set; }
 
         public string GetFirstToken()
         {

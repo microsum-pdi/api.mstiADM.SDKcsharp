@@ -1,4 +1,7 @@
 ﻿using api.mstiADM.SDK.csharp.Enums;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json.Converters;
 using NJsonSchema.Annotations;
 using System.Runtime.InteropServices;
 
@@ -15,6 +18,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
          ""senha"": ""keycod&"",
          ""nivelTipo"": ""REVENDA"",
          ""nivelIDCollection"": ""5f3ec01276d85c301c9af975"",
+         ""Situacao"": ""ATIVO"",
          ""Acessos"":{
             ""AcessoApiDFE"": true,
             ""AcessoApiTAX"": true,
@@ -57,6 +61,9 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         public string CodigoRelacionamento { get; set; }
 
         public string ApelidoFantasiaRelacionamento { get; set; }
+
+        public EEntidadeSituacao Situacao { get; set; }
+
         #endregion
     }
 }

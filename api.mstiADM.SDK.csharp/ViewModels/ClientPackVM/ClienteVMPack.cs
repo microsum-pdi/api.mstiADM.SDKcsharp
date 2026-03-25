@@ -81,6 +81,9 @@ namespace api.mstiADM.SDK.csharp.ViewModels.ClientPackVM
         [Key(20)]
         public EfdVMPack EFD { get; set; }
 
+        [Key(21)]
+        public EEntidadeSituacao Situacao { get; set; }
+
         public string GetCpfOrCnpj()
         {
             if (!string.IsNullOrEmpty(CPFCNPJ))
@@ -129,7 +132,8 @@ namespace api.mstiADM.SDK.csharp.ViewModels.ClientPackVM
                 PAY = PAY?.ToPayVM(),
                 TAX = TAX?.ToTaxVM(),
                 HUB = HUB?.ToHubVM(),
-                EFD = EFD?.ToEfdVM()
+                EFD = EFD?.ToEfdVM(),
+                Situacao = Situacao
             };
 
             return clienteVM;
