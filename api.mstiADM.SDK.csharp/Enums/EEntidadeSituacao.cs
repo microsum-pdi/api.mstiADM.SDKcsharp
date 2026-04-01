@@ -5,7 +5,7 @@ namespace api.mstiADM.SDK.csharp.Enums
     [ComVisible(true)]
     public enum EEntidadeSituacao
     {
-        ATIVO,
+        ATIVO, 
         PENDENTE,
         INATIVO
     }
