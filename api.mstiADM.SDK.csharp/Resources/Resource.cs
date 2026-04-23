@@ -390,6 +390,22 @@
         public const string PaisAtualizarFalha = "Erro ao atualizar o país";
         public const string PaisCodigoJaUtilizado = "Codigo do país já está cadastrado";
 
+        public const string ISSQN_IndicadorOperacao_CodigoInvalido = "Codigo ISSQN_IndicadorOperacao inválido";
+        public const string ISSQN_IndicadorOperacao_DescricaoInvalida = "Descrição ISSQN_IndicadorOperacao inválida";
+        public const string ISSQN_IndicadorOperacao_TipoInvalido = "Tipo ISSQN_IndicadorOperacao inválido";
+        public const string ISSQN_IndicadorOperacao_LocalInvalido = "Local ISSQN_IndicadorOperacao inválido";
+
+        public const string ISSQN_IndicadorOperacao_LocalizarFalha = "Não existe ISSQNIndicadorOperacao cadastrado com o código especificado";
+        public const string ISSQN_IndicadorOperacao_ExcluirSucesso = "ISSQNIndicadorOperacao excluido com sucesso";
+        public const string ISSQN_IndicadorOperacao_ExcluirFalha = "Erro ao excluir o ISSQNIndicadorOperacao";
+        public const string ISSQN_IndicadorOperacao_AdicionarSucesso = "ISSQNIndicadorOperacao adicionado com sucesso";
+        public const string ISSQN_IndicadorOperacao_AdicionarFalha = "Erro ao adicionar o ISSQNIndicadorOperacao";
+        public const string ISSQN_IndicadorOperacao_AdicionarFalhaSysVer = "Erro ao adicionar o ISSQNIndicadorOperacao. É necessário cadastrar os ISSQNIndicadorOperacao padrões no banco de dados.";
+        public const string ISSQN_IndicadorOperacao_AtualizarSucesso = "ISSQNIndicadorOperacao atualizado com sucesso";
+        public const string ISSQN_IndicadorOperacao_AtualizarFalha = "Erro ao atualizar o ISSQNIndicadorOperacao";
+        public const string ISSQN_IndicadorOperacao_CodigoJaUtilizado = "Codigo ISSQNIndicadorOperacao já está cadastrado";
+        public const string CodigoNaoPodeSerAlterado = "Código não pode ser alterado";
+
         #endregion
 
         #region  MENSAGENS ENTIDADE Log
@@ -479,6 +495,8 @@
         #region OpenTracing
 
         public const string ErroAoGerarVariaveisOpenTracing = "Não foi possível obter as configurações para as variáveis do OpenTracing ('JAEGER_AGENT_HOST' e 'JAEGER_AGENT_PORT') . Verifique o arquivo 'appsettings.json'";
+
+        
 
         public static string CodigoTamanhoMaximoPermitido(int tamanhoMaximo)
         {

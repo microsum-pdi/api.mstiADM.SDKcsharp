@@ -42,6 +42,7 @@ namespace api.mstiADM.SDK.csharp.Enums
         TABPDNBSs,
         TABPDIBSCBSCSTs,
         TABPDIBSCBSCCLASSTRIBs,
+        TABPDISSQNIndicadoresOperacao,
         Nenhum
     }
 }
