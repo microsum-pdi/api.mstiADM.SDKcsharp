@@ -4,7 +4,6 @@
     {
         public string Tipo { get; set; }
 
-
         public string Local { get; set; }
 
     }
