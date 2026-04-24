@@ -28,6 +28,7 @@
         public TABPD_RegimeTributario_VM[] TABPDRegimesTributarios { get; set; }
         public TABPD_TipoItem_VM[] TABPDTiposItens { get; set; }        
         public TABPD_UF_VM[] TABPDUFs { get; set; }
+        public TABPD_ISSQN_IndicadoresOperacao_VM[] TABPDISSQNIndicadoresOperacao { get; set; }
         public TABPDBaseVM[] TABPDGenericos { get; set; }
     }
 }
