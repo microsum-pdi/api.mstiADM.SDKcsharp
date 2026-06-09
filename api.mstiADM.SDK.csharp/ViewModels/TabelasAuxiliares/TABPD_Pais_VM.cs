@@ -2,6 +2,6 @@
 {
     public class TABPD_Pais_VM : TABPDBaseVM
     {
-
+        public string Sigla { get; set; }
     }
 }
