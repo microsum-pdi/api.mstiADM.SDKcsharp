@@ -33,24 +33,27 @@ namespace api.mstiADM.SDK.csharp.ViewModels
 
         public string PaisDescricao { get; set; }
 
+        public string PaisSigla { get; set; }
+
         public string UFSigla { get; set; }
 
         public EnderecoVMPack ToEnderecoVMPack()
         {
             return new EnderecoVMPack
             {
-                Logradouro = this.Logradouro,
-                Numero = this.Numero,
-                Complemento = this.Complemento,
-                Bairro = this.Bairro,
-                CidadeCodigo = this.CidadeCodigo,
-                CidadeDescricao = this.CidadeDescricao,
-                UFDescricao = this.UFDescricao,
-                UFCodigo = this.UFCodigo,
-                CEP = this.CEP,
-                PaisCodigo = this.PaisCodigo,
-                PaisDescricao = this.PaisDescricao,
-                UFSigla = this.UFSigla
+                Logradouro = Logradouro,
+                Numero = Numero,
+                Complemento = Complemento,
+                Bairro = Bairro,
+                CidadeCodigo = CidadeCodigo,
+                CidadeDescricao = CidadeDescricao,
+                UFDescricao = UFDescricao,
+                UFCodigo = UFCodigo,
+                CEP = CEP,
+                PaisCodigo = PaisCodigo,
+                PaisDescricao = PaisDescricao,
+                PaisSigla = PaisSigla,
+                UFSigla = UFSigla
             };
         }
 
@@ -69,7 +72,8 @@ namespace api.mstiADM.SDK.csharp.ViewModels
                 UFDescricao = UFDescricao,
                 UFSigla = UFSigla,
                 PaisCodigo = PaisCodigo,
-                PaisDescricao = PaisDescricao
+                PaisDescricao = PaisDescricao,
+                PaisSigla = PaisSigla
             };
         }
     }

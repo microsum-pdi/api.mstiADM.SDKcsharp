@@ -36,6 +36,9 @@ namespace api.mstiADM.SDK.csharp.Entidade
         [BsonElement("PaisDescricao")]
         public string PaisDescricao { get; set; }
 
+        [BsonElement("PaisSigla")]
+        public string PaisSigla { get; set; }
+
         [BsonElement("UFCodigo")]
         public string UFCodigo { get; set; }
 

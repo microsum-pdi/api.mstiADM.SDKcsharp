@@ -79,6 +79,9 @@ namespace api.mstiADM.SDK.csharp.Entidade
         [BsonElement("PaisDescricao")]
         public string PaisDescricao { get; private set; }
 
+        [BsonElement("PaisSigla")]
+        public string PaisSigla { get; private set; }
+
         [BsonElement("UFCodigo")]
         public string UFCodigo { get; private set; }
 
@@ -173,6 +176,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
             this.CEP = endereco?.CEP;
             this.PaisCodigo = endereco?.PaisCodigo;
             this.PaisDescricao = endereco?.PaisDescricao;
+            this.PaisSigla = endereco?.PaisSigla;
 
             //campos da classe Contatos
             this.Telefone = contatos.Telefone;

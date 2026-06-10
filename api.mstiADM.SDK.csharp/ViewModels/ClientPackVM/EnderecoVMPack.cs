@@ -41,23 +41,26 @@ namespace api.mstiADM.SDK.csharp.ViewModels.ClientPackVM
         [Key(11)]
         public string UFSigla { get; set; }
 
+        [Key(12)]
+        public string PaisSigla { get; set; }
 
 
         public EnderecoVM ToEnderecoVM()
         {
             return new EnderecoVM
             {
-                Logradouro = this.Logradouro,
-                Numero = this.Numero,
-                Complemento = this.Complemento,
-                Bairro = this.Bairro,
-                CidadeCodigo = this.CidadeCodigo,
-                CidadeDescricao = this.CidadeDescricao,
-                UFDescricao = this.UFDescricao,
-                CEP = this.CEP,
-                PaisCodigo = this.PaisCodigo,
-                PaisDescricao = this.PaisDescricao,
-                UFSigla = this.UFSigla,
+                Logradouro = Logradouro,
+                Numero = Numero,
+                Complemento = Complemento,
+                Bairro = Bairro,
+                CidadeCodigo = CidadeCodigo,
+                CidadeDescricao = CidadeDescricao,
+                UFDescricao = UFDescricao,
+                CEP = CEP,
+                PaisCodigo = PaisCodigo,
+                PaisDescricao = PaisDescricao,
+                PaisSigla = PaisSigla,
+                UFSigla = UFSigla,
                 UFCodigo = UFCodigo
             };
         }
