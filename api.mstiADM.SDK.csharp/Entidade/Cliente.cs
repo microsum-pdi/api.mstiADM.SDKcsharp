@@ -219,9 +219,9 @@ namespace api.mstiADM.SDK.csharp.Entidade
             }
             else
             {
-                if(VoCNPJ.IsCNPJ(CPFCNPJ) && !VoCNPJ.Check(CPFCNPJ))
+                if(VoCNPJ.IsCNPJ(CPFCNPJ))
                 {
-                    AddNotification("CPFCNPJ", "CNPJ inválido!");
+                    if(!VoCNPJ.Check(CPFCNPJ)) AddNotification("CPFCNPJ", "CNPJ inválido!");
                 }
                 else
                 {
