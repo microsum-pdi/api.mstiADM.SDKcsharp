@@ -31,6 +31,11 @@ namespace api.mstiADM.SDK.csharp.ValueObjects
             return Check(strCNPJ);
         }
 
+        public bool Check()
+        {
+            return Check(strCNPJ);
+        }
+
         public static bool Check(string cnpj)
         {
             if (string.IsNullOrWhiteSpace(cnpj) || RegexCaracteresNaoPermitidos.IsMatch(cnpj))
@@ -46,6 +51,11 @@ namespace api.mstiADM.SDK.csharp.ValueObjects
             }
 
             return false;
+        }
+
+        public string CalculaDV()
+        {
+            return CalculaDV(strCNPJ);
         }
 
         public static string CalculaDV(string cnpj)
@@ -75,6 +85,11 @@ namespace api.mstiADM.SDK.csharp.ValueObjects
             }
 
             throw new ArgumentException("Não é possível calcular o DV pois o CNPJ fornecido é inválido");
+        }
+
+        public string ClearFormat()
+        {
+            return ClearFormat(strCNPJ);
         }
 
         public static string ClearFormat(string cnpj)
