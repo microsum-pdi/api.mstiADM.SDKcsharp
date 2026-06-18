@@ -1,5 +1,4 @@
 ﻿using api.mstiADM.SDK.csharp.Entidade;
-using api.mstiADM.SDK.csharp.Resources;
 using System;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
@@ -11,149 +10,106 @@ namespace api.mstiADM.SDK.csharp.ValueObjects
     {
         private string strCNPJ { get; set; }
 
-        public VoCNPJ(string CNPJ)
-        {
-            if (CNPJ != null)
-            {
+        private const int TamanhoCnpJSemDV = 12;
+        private static readonly Regex RegexCnpJSemDV = new Regex(@"^([A-Z\d]){12}$", RegexOptions.Compiled);
+        private static readonly Regex RegexCnpj = new Regex(@"^([A-Z\d]){12}(\d){2}$", RegexOptions.Compiled);
+        private static readonly Regex RegexCaracteresNaoPermitidos = new Regex(@"[^A-Z\d./-]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private const int ValorBase = '0';
+        private static readonly int[] PesosDV = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+        private const string CnpjZerado = "00000000000000";
 
-                this.strCNPJ = CNPJ;
+        public VoCNPJ() { }
 
-                if (string.IsNullOrEmpty(CNPJ) || !isValid(CNPJ))
-                    AddNotification("CNPJ", Resource.CNPJInvalido);
-            }
-            else
-            {
-                AddNotification("CNPJ", Resource.CNPJInvalido);
-            }
+        public VoCNPJ(string CNPJ) 
+        { 
+            strCNPJ = CNPJ; 
+            if(!Check(CNPJ)) AddNotification("CNPJ", "CNPJ inválido");
         }
 
-        public string getNumbers()
+        public bool IsValid()
         {
-            return String.Join("", System.Text.RegularExpressions.Regex.Split(this.strCNPJ, @"[^\d]"));
+            return Check(strCNPJ);
         }
 
-        public bool isValid(string documento)
+        public static bool Check(string cnpj)
         {
-            var valido = ValidaCNPJ.Instance.isValid(documento);
-            return valido;
-        }
-    }
-
-    public class ValidaCNPJ
-    {
-        public static readonly ValidaCNPJ _instance = new ValidaCNPJ();
-
-        public static ValidaCNPJ Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
-
-        private bool IsCnpj(string vrCNPJ)
-        {
-            if (vrCNPJ == null)
+            if (string.IsNullOrWhiteSpace(cnpj) || RegexCaracteresNaoPermitidos.IsMatch(cnpj))
                 return false;
 
-            string CNPJ = String.Join("", Regex.Split(vrCNPJ, @"[^\d]"));
+            string cnpjSemMascara = ClearFormat(cnpj);
 
-            bool result = true;
-
-            switch (CNPJ)
+            if (RegexCnpj.IsMatch(cnpjSemMascara) && cnpjSemMascara != CnpjZerado)
             {
-                case "00000000000000":
-                    result = false;
-                    break;
-                case "11111111111111":
-                    result = false;
-                    break;
-                case "22222222222222":
-                    result = false;
-                    break;
-                case "33333333333333":
-                    result = false;
-                    break;
-                case "44444444444444":
-                    result = false;
-                    break;
-                case "55555555555555":
-                    result = false;
-                    break;
-                case "66666666666666":
-                    result = false;
-                    break;
-                case "77777777777777":
-                    result = false;
-                    break;
-                case "88888888888888":
-                    result = false;
-                    break;
-                case "99999999999999":
-                    result = false;
-                    break;
+                string dvInformado = cnpjSemMascara.Substring(TamanhoCnpJSemDV);
+                string dvCalculado = CalculaDV(cnpjSemMascara.Substring(0, TamanhoCnpJSemDV));
+                return dvInformado == dvCalculado;
             }
-            if (result == false)
-                return false;
 
-            int[] digitos, soma, resultado;
-            int nrDig;
-            string ftmt;
-            bool[] CNPJOk;
+            return false;
+        }
 
-            ftmt = "6543298765432";
-            digitos = new int[14];
-            soma = new int[2];
-            soma[0] = 0;
-            soma[1] = 0;
-            resultado = new int[2];
-            resultado[0] = 0;
-            resultado[1] = 0;
-            CNPJOk = new bool[2];
-            CNPJOk[0] = false;
-            CNPJOk[1] = false;
+        public static string CalculaDV(string cnpj)
+        {
+            if (string.IsNullOrWhiteSpace(cnpj) || RegexCaracteresNaoPermitidos.IsMatch(cnpj))
+                throw new ArgumentException("CNPJ inválido.");
 
-            try
+            string cnpjSemMascara = ClearFormat(cnpj);
+
+            if (RegexCnpJSemDV.IsMatch(cnpjSemMascara) && cnpjSemMascara != CnpjZerado.Substring(0, TamanhoCnpJSemDV))
             {
-                for (nrDig = 0; nrDig < 14; nrDig++)
+                int somatorioDV1 = 0;
+                int somatorioDV2 = 0;
+
+                for (int i = 0; i < TamanhoCnpJSemDV; i++)
                 {
-                    digitos[nrDig] = int.Parse(
-                        CNPJ.Substring(nrDig, 1));
-                    if (nrDig <= 11)
-                        soma[0] += (digitos[nrDig] *
-                        int.Parse(ftmt.Substring(
-                            nrDig + 1, 1)));
-                    if (nrDig <= 12)
-                        soma[1] += (digitos[nrDig] *
-                        int.Parse(ftmt.Substring(
-                            nrDig, 1)));
+                    int asciiDigito = cnpjSemMascara[i] - ValorBase;
+                    somatorioDV1 += asciiDigito * PesosDV[i + 1];
+                    somatorioDV2 += asciiDigito * PesosDV[i];
                 }
 
-                for (nrDig = 0; nrDig < 2; nrDig++)
-                {
-                    resultado[nrDig] = (soma[nrDig] % 11);
-                    if ((resultado[nrDig] == 0) || (resultado[nrDig] == 1))
-                        CNPJOk[nrDig] = (
-                        digitos[12 + nrDig] == 0);
+                int dv1 = (somatorioDV1 % 11 < 2) ? 0 : 11 - (somatorioDV1 % 11);
+                somatorioDV2 += dv1 * PesosDV[TamanhoCnpJSemDV];
+                int dv2 = (somatorioDV2 % 11 < 2) ? 0 : 11 - (somatorioDV2 % 11);
 
-                    else
-                        CNPJOk[nrDig] = (
-                        digitos[12 + nrDig] == (
-                        11 - resultado[nrDig]));
-
-                }
-
-                return (CNPJOk[0] && CNPJOk[1]);
+                return $"{dv1}{dv2}";
             }
-            catch
-            {
-                return false;
-            }
+
+            throw new ArgumentException("Não é possível calcular o DV pois o CNPJ fornecido é inválido");
         }
 
-        public bool isValid(string cnpj)
+        public static string ClearFormat(string cnpj)
         {
-            return IsCnpj(cnpj);
+            return Regex.Replace(cnpj, @"[^a-zA-Z0-9]", "");
+        }
+    
+        public static bool IsCNPJ(string cnpj)
+        {
+            var value = ClearFormat(cnpj);
+            return value.Length == 14;
+        }
+
+        /// <summary>
+        /// Formata o CNPJ da própria instância adicionando a máscara (XX.XXX.XXX/XXXX-XX).
+        /// </summary>
+        public string Format()
+        {
+            return Format(strCNPJ);
+        }
+
+        /// <summary>
+        /// Método estático que recebe uma string de CNPJ (com ou sem máscara) e retorna formatado corretamente.
+        /// </summary>
+        public static string Format(string cnpj)
+        {
+            if (string.IsNullOrWhiteSpace(cnpj)) return string.Empty;
+
+            string cnpjSemMascara = ClearFormat(cnpj);
+
+            // Garante que o CNPJ tem o tamanho padrão de 14 caracteres antes de aplicar a máscara
+            if (cnpjSemMascara.Length != 14)
+                return cnpj; // Retorna o valor original caso não possua tamanho correto para formatação
+
+            return $"{cnpjSemMascara.Substring(0, 2)}.{cnpjSemMascara.Substring(2, 3)}.{cnpjSemMascara.Substring(5, 3)}/{cnpjSemMascara.Substring(8, 4)}-{cnpjSemMascara.Substring(12, 2)}";
         }
     }
 }

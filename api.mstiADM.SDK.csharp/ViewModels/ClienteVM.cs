@@ -1,6 +1,4 @@
-﻿using api.mstiADM.SDK.csharp.Entidade;
-using api.mstiADM.SDK.csharp.Enums;
-using api.mstiADM.SDK.csharp.Extensions;
+﻿using api.mstiADM.SDK.csharp.Enums;
 using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM;
 using api.mstiADM.SDK.csharp.ViewModels.ClientPackVM._Base;
 using MongoDB.Bson.Serialization.Attributes;
@@ -170,14 +168,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels
 
         public string GetCpfOrCnpj()
         {
-            if (!string.IsNullOrEmpty(CPFCNPJ))
-            {
-                return CPFCNPJ.SomenteNumeros();
-            }
-            else
-            {
-                return "";
-            }
+            return !string.IsNullOrEmpty(CPFCNPJ) ? CPFCNPJ : "";
         }
 
         public bool IsCodigoRevendaValido()

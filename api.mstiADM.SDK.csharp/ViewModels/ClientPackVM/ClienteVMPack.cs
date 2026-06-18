@@ -86,14 +86,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels.ClientPackVM
 
         public string GetCpfOrCnpj()
         {
-            if (!string.IsNullOrEmpty(CPFCNPJ))
-            {
-                return CPFCNPJ.SomenteNumeros();
-            }
-            else
-            {
-                return "";
-            }
+            return !string.IsNullOrEmpty(CPFCNPJ) ? CPFCNPJ.SomenteNumeros() : "";
         }
 
         public bool IsCodigoRevendaValido()

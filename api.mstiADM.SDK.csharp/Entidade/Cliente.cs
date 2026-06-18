@@ -5,7 +5,6 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -214,34 +213,20 @@ namespace api.mstiADM.SDK.csharp.Entidade
 
         private void ValidaCpfCnpj()
         {
-            VoCPF cpf = new VoCPF(CPFCNPJ);
-            VoCNPJ cnpj = new VoCNPJ(CPFCNPJ);
-
-            if (CPFCNPJ == "string")
-            {
-                CPFCNPJ = "";
-            }
-
-            if (CPFCNPJ == "string")
-            {
-                CPFCNPJ = "";
-            }
-
-            if (string.IsNullOrEmpty(CPFCNPJ) || cpf.Invalid && cnpj.Invalid)
+            if(string.IsNullOrEmpty(CPFCNPJ) && string.IsNullOrWhiteSpace(CPFCNPJ))
             {
                 AddNotification("CPFCNPJ", Resource.CPFCNPJInvalido);
             }
-            else if (cpf.Invalid && cnpj.Invalid)
+            else
             {
-                string NumerosCPFCNPJ = String.Join("", System.Text.RegularExpressions.Regex.Split(CPFCNPJ, @"[^\d]"));
-
-                if (NumerosCPFCNPJ.Length > 11 && cnpj.Invalid)
+                if(VoCNPJ.IsCNPJ(CPFCNPJ) && !VoCNPJ.Check(CPFCNPJ))
                 {
-                    AddNotification("CPFCNPJ", Resource.CPFCNPJInvalido);
+                    AddNotification("CPFCNPJ", "CNPJ inválido!");
                 }
-                else if (cpf.Invalid)
+                else
                 {
-                    AddNotification("CPFCNPJ", Resource.CPFCNPJInvalido);
+                    var cpf  = new VoCPF(CPFCNPJ);
+                    if(!cpf.IsValid) AddNotification("CPFCNPJ", "CPF inválido!");
                 }
             }
         }
@@ -255,7 +240,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
 
         public void CriarListaTokens()
         {
-            this.Tokens = new List<ClienteToken>();
+            Tokens = new List<ClienteToken>();
         }
 
         public void AtualizaCertificado(ClienteCertificado Certificado)
