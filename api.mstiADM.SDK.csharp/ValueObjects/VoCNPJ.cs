@@ -94,6 +94,7 @@ namespace api.mstiADM.SDK.csharp.ValueObjects
 
         public static string ClearFormat(string cnpj)
         {
+            if(string.IsNullOrWhiteSpace(cnpj) || string.IsNullOrEmpty(cnpj)) return cnpj;
             return Regex.Replace(cnpj, @"[^a-zA-Z0-9]", "");
         }
     
