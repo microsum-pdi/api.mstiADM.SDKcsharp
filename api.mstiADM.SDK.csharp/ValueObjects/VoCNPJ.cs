@@ -1,7 +1,7 @@
-﻿using api.mstiADM.SDK.csharp.Entidade;
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using api.mstiADM.SDK.csharp.Entidade;
 
 namespace api.mstiADM.SDK.csharp.ValueObjects
 {
