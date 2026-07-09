@@ -84,6 +84,9 @@ namespace api.mstiADM.SDK.csharp.ViewModels.ClientPackVM
         [Key(21)]
         public EEntidadeSituacao Situacao { get; set; }
 
+        [Key(22)]
+        public string Id { get; set; }
+
         public string GetCpfOrCnpj()
         {
             return !string.IsNullOrEmpty(CPFCNPJ) ? CPFCNPJ.SomenteNumeros() : "";
@@ -105,6 +108,7 @@ namespace api.mstiADM.SDK.csharp.ViewModels.ClientPackVM
         {
             ClienteVM clienteVM = new ClienteVM()
             {
+                Id = Id,
                 Codigo = Codigo,
                 CodigoRevenda = CodigoRevenda,
                 NomeRazaoSocial = NomeRazaoSocial,

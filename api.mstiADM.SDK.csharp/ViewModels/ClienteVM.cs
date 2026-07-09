@@ -187,27 +187,27 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         {
             ClienteVMPack clienteVMPack = new ClienteVMPack()
             {
-                Codigo = Codigo,
-                CodigoRevenda = CodigoRevenda,
-                NomeRazaoSocial = NomeRazaoSocial,
-                Endereco = Endereco.ToEnderecoVMPack(),
-                Contatos = Contatos.ToContatosVMPack(),
-                CPFCNPJ = CPFCNPJ,
-                IE = IE,
-                IM = IM,
-                Pessoa = Pessoa,
-                ApelidoFantasia = ApelidoFantasia,
-                Contribuinte = Contribuinte,
-                DI = DI,
-                LogotipoB64 = LogotipoB64,
-                Tokens = Tokens?.ToListTokenVMPack(),
-                WebHooks = WebHooks?.ToListWebHookVMPack(),
-                Certificado = Certificado?.ToClienteCertificadoVMPack(),
-                DFE = DFE?.ToDFeVMPack(),
-                PAY = PAY?.ToPayVMPack(),
-                TAX = TAX?.ToTaxVMPack(),
-                HUB = HUB?.ToHubVMPack(),
-                EFD = EFD?.ToEfdVMPack()
+              Codigo = Codigo,
+              CodigoRevenda = CodigoRevenda,
+              NomeRazaoSocial = NomeRazaoSocial,
+              Endereco = Endereco.ToEnderecoVMPack(),
+              Contatos = Contatos.ToContatosVMPack(),
+              CPFCNPJ = CPFCNPJ,
+              IE = IE,
+              IM = IM,
+              Pessoa = Pessoa,
+              ApelidoFantasia = ApelidoFantasia,
+              Contribuinte = Contribuinte,
+              DI = DI,
+              LogotipoB64 = LogotipoB64,
+              Tokens = Tokens?.ToListTokenVMPack(),
+              WebHooks = WebHooks?.ToListWebHookVMPack(),
+              Certificado = Certificado?.ToClienteCertificadoVMPack(),
+              DFE = DFE?.ToDFeVMPack(),
+              PAY = PAY?.ToPayVMPack(),
+              TAX = TAX?.ToTaxVMPack(),
+              HUB = HUB?.ToHubVMPack(),
+              EFD = EFD?.ToEfdVMPack()
             };
 
             return clienteVMPack;
