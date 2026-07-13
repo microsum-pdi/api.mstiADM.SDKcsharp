@@ -310,5 +310,50 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
                 throw new Exception(DetalheErro);
             }
         }
+    
+        /// <summary>
+        /// Permite obter uma chave de acesso temporária na AMIntegra.
+        /// </summary>
+        /// <param name="data">Dados do cliente</param>
+        public async Task<ADMResultVM<string>> GeraChaveAcessoTemporario(ClienteAutoLoginVM data)
+        {
+            var token = data.Token;
+            var baseURL = configAmbienteSDK.URL;
+            var URL = $"{baseURL}/admui/api/clientefast/{token}/autologin";
+
+            if(string.IsNullOrEmpty(token))
+                return new ADMResultVM<string>()
+                    .WithStatusCode(ADMEHttpStatusCode.BadRequest)
+                    .WithMessage("Token do usuário deve ser informado!");
+
+            try
+            {
+                var response = await ExecutaPost(data, URL);
+                var json = await response.Content.ReadAsStringAsync();
+                
+                if (string.IsNullOrEmpty(json))
+                {
+                    return new ADMResultVM<string>()
+                        .WithStatusCode(ADMEHttpStatusCode.BadRequest)
+                        .WithMessage("Não foi possível gerar chave de acesso temporária.");
+                }
+
+                var resultVM = JsonConvert.DeserializeObject<ADMResultVM<string>>(json, jsonSerializerSettings);
+                if(!resultVM.IsSuccessStatusCode()) return resultVM;
+
+                var chaveAcesso = resultVM.GetFirstData();
+                var linkAcesso = $"{baseURL}/autologin/?chaveAcesso={chaveAcesso}";
+
+                return new ADMResultVM<string>().WithData(linkAcesso);
+            }
+            catch (Exception ex)
+            {
+                string DetalheErro = "";
+                DetalheErro += "Erro ao atualizar os dados do cliente." + " - " + ex.ADMGetAllInnerExceptionsMessage() + "\n";
+                DetalheErro += "Url: " + URL + "\n";
+
+                throw new Exception(DetalheErro);
+            }
+        }
     }
 }
