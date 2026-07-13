@@ -319,7 +319,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         {
             var token = data.Token;
             var baseURL = configAmbienteSDK.URL;
-            var URL = $"{baseURL}/admui/api/clientefast/{token}/autologin";
+            var URL = $"{baseURL}/admui/api/clientefast/autologin";
 
             if(string.IsNullOrEmpty(token))
                 return new ADMResultVM<string>()
