@@ -342,7 +342,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
                 if(!resultVM.IsSuccessStatusCode()) return resultVM;
 
                 var chaveAcesso = resultVM.GetFirstData();
-                var linkAcesso = $"{baseURL}/autologin/?chaveAcesso={chaveAcesso}";
+                var linkAcesso = $"{baseURL}/autologin/?acesso={chaveAcesso}";
 
                 return new ADMResultVM<string>().WithData(linkAcesso);
             }
