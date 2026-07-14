@@ -8,6 +8,14 @@ namespace api.mstiADM.SDK.csharp.ViewModels
         public string Token {get; set; }
         public string Email {get; set; }
 
+        public ClienteAutoLoginVM() { }
+
+        public ClienteAutoLoginVM(string Token, string Email)
+        {
+            this.Token = Token;
+            this.Email = Email;
+        }
+
         public string ToChaveVM()
         {
             var obj = new ClienteAutoLoginChaveVM()

@@ -18,13 +18,9 @@ namespace api.mstiADM.SDK.csharp.Services
             this.configAmbienteSDK = configAmbienteSDK;
 
             if (configAmbienteSDK.HttpClient == null)
-            {
                 _httpClient = new HttpClient();
-            }
             else
-            {
                 _httpClient = configAmbienteSDK.HttpClient;
-            }
         }
 
         protected async Task<HttpResponseMessage> ExecutaPut<T>(T dados, string url)

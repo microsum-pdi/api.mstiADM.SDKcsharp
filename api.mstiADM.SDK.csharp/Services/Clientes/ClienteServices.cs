@@ -20,9 +20,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
             DateFormatString = "dd/MM/yyyy HH:mm:ss"
         };
 
-        public ClienteServices(ConfigAmbienteSDK configAmbienteSDK) : base(configAmbienteSDK)
-        {
-        }
+        public ClienteServices(ConfigAmbienteSDK configAmbienteSDK) : base(configAmbienteSDK) { }
 
         /// <summary>
         /// Localiza um cliente através do token passado
@@ -30,30 +28,19 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="token">Token do cliente da API</param>
         public async Task<ADMResultVM<ClienteVM>> ObterCliente(string token)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}";
-
-            ADMResultVM<ClienteVM> result = new ADMResultVM<ClienteVM>();
+            var url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}";
 
             try
             {
-                HttpResponseMessage response = await ExecutaGet(url);
+                var response = await ExecutaGet(url);
+                var json = await response.Content.ReadAsStringAsync();
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody, jsonSerializerSettings);
-
-                if (resposta == null)
-                {
-                    result
+                if (string.IsNullOrEmpty(json))
+                    return new ADMResultVM<ClienteVM>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
                         .WithMessage("Não foi possível obter o cliente através do token.");
-                }
-                else
-                {
-                    result = resposta;
-                }
 
-                return result;
+                return JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(json, jsonSerializerSettings);
             }
             catch (Exception ex)
             {
@@ -71,30 +58,20 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="token">Token do cliente da API</param>
         public async Task<ADMResultVM<UsuarioVM>> ObterUsuariosDoCliente(string token)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}/usuarios";
-
-            ADMResultVM<UsuarioVM> result = new ADMResultVM<UsuarioVM>();
+            var url = configAmbienteSDK.URL + $"/admui/api/clientefast/{Uri.EscapeDataString(token)}/usuarios";
 
             try
             {
-                HttpResponseMessage response = await ExecutaGet(url);
+                var response = await ExecutaGet(url);
+                var json = await response.Content.ReadAsStringAsync();
+                var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(json, jsonSerializerSettings);
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(responseBody, jsonSerializerSettings);
-
-                if (resposta == null)
-                {
-                    result
+                if (string.IsNullOrEmpty(json))
+                    return new ADMResultVM<UsuarioVM>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
-                        .WithMessage("Não foi possível obter os usuarios do cliente através do token.");
-                }
-                else
-                {
-                    result = resposta;
-                }
+                        .WithMessage("Não foi possível obter o cliente através do token.");
 
-                return result;
+                return JsonConvert.DeserializeObject<ADMResultVM<UsuarioVM>>(json, jsonSerializerSettings);
             }
             catch (Exception ex)
             {
@@ -120,35 +97,21 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
                 { new ByteArrayContent(certificadoDigital), "certificadoDigital", "certificadoDigital" }
             };
 
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualiza_certificado_digital";
-
-            ADMResultVM<ClienteCertificadoVM> result = new ADMResultVM<ClienteCertificadoVM>();
+            var url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualiza_certificado_digital";
 
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Put, url)
-                {
-                    Content = content
-                };
+                var request = new HttpRequestMessage(HttpMethod.Put, url) { Content = content };
                 request.Headers.Add("x-api-key", configAmbienteSDK.Token);
-                HttpResponseMessage response = await configAmbienteSDK.HttpClient.SendAsync(request);
+                var response = await configAmbienteSDK.HttpClient.SendAsync(request);
+                var json = await response.Content.ReadAsStringAsync();
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteCertificadoVM>>(responseBody);
-
-                if (resposta == null)
-                {
-                    result
+                if (string.IsNullOrEmpty(json))
+                    return new ADMResultVM<ClienteCertificadoVM>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
                         .WithMessage("Não foi possível atualizar o certificado digital do cliente.");
-                }
-                else
-                {
-                    result = resposta;
-                }
 
-                return result;
+                return JsonConvert.DeserializeObject<ADMResultVM<ClienteCertificadoVM>>(json, jsonSerializerSettings);
             }
             catch (Exception ex)
             {
@@ -162,8 +125,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 
         private async Task<byte[]> ConverterParaBytes(IFormFile certificadoDigital)
         {
-            if (certificadoDigital == null || certificadoDigital.Length == 0)
-                return null;
+            if (certificadoDigital == null || certificadoDigital.Length == 0) return null;
 
             using (var memoryStream = new MemoryStream())
             {
@@ -192,30 +154,19 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="token">Token do cliente</param>
         public async Task<ADMResultVM<ClienteCertificadoVM>> ObterCertificadoDigital(string token)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/get_certificado_digital";
-
-            ADMResultVM<ClienteCertificadoVM> result = new ADMResultVM<ClienteCertificadoVM>();
+            var url = $"{configAmbienteSDK.URL}/admui/api/clientefast/{token}/get_certificado_digital";
 
             try
             {
-                HttpResponseMessage response = await ExecutaGet(url);
+                var response = await ExecutaGet(url);
+                var json = await response.Content.ReadAsStringAsync();
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteCertificadoVM>>(responseBody);
-
-                if (resposta == null)
-                {
-                    result
+                if (string.IsNullOrEmpty(json))
+                    return new ADMResultVM<ClienteCertificadoVM>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
                         .WithMessage("Não foi possível obter o certificado digital do cliente.");
-                }
-                else
-                {
-                    result = resposta;
-                }
 
-                return result;
+                return JsonConvert.DeserializeObject<ADMResultVM<ClienteCertificadoVM>>(json, jsonSerializerSettings);
             }
             catch (Exception ex)
             {
@@ -234,30 +185,19 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// <param name="strB64Logotipo">B64 do logotipo</param>
         public async Task<ADMResultVM<string>> AtualizaLogotipo(string token, string strB64Logotipo)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualiza_logotipo";
-
-            ADMResultVM<string> result = new ADMResultVM<string>();
+            var url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualiza_logotipo";
 
             try
             {
-                HttpResponseMessage response = await ExecutaPut(strB64Logotipo, url);
+                var response = await ExecutaPut(strB64Logotipo, url);
+                var json = await response.Content.ReadAsStringAsync();
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<string>>(responseBody);
-
-                if (resposta == null)
-                {
-                    result
+                if (string.IsNullOrEmpty(json))
+                    return new ADMResultVM<string>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
                         .WithMessage("Não foi possível atualizar o logotipo do cliente.");
-                }
-                else
-                {
-                    result = resposta;
-                }
 
-                return result;
+                return JsonConvert.DeserializeObject<ADMResultVM<string>>(json, jsonSerializerSettings);
             }
             catch (Exception ex)
             {
@@ -276,30 +216,19 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         /// </summary>
         public async Task<ADMResultVM<ClienteVM>> AtualizarClienteParcial(string token, AtualizaClienteParcialVM cliente)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualizarcliente";
-
-            ADMResultVM<ClienteVM> result = new ADMResultVM<ClienteVM>();
+            var url = configAmbienteSDK.URL + $"/admui/api/clientefast/{token}/atualizarcliente";
 
             try
             {
-                HttpResponseMessage response = await ExecutaPut(cliente, url);
+                var response = await ExecutaPut(cliente, url);
+                var json = await response.Content.ReadAsStringAsync();
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(responseBody, jsonSerializerSettings);
-
-                if (resposta == null)
-                {
-                    result
+                if (string.IsNullOrEmpty(json))
+                    return new ADMResultVM<ClienteVM>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
                         .WithMessage("Não foi possível atualizar os dados do cliente.");
-                }
-                else
-                {
-                    result = resposta;
-                }
 
-                return result;
+                return JsonConvert.DeserializeObject<ADMResultVM<ClienteVM>>(json, jsonSerializerSettings);
             }
             catch (Exception ex)
             {
@@ -318,7 +247,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         public async Task<ADMResultVM<string>> GeraChaveAcessoTemporario(ClienteAutoLoginVM data)
         {
             var token = data.Token;
-            var baseURL = configAmbienteSDK.URL;
+            var baseURL = configAmbienteSDK.URL.TrimEnd('/');
             var URL = $"{baseURL}/admui/api/clientefast/autologin";
 
             if(string.IsNullOrEmpty(token))
@@ -342,7 +271,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
                 if(!resultVM.IsSuccessStatusCode()) return resultVM;
 
                 var chaveAcesso = resultVM.GetFirstData();
-                var linkAcesso = $"{baseURL}/autologin/?acesso={chaveAcesso}";
+                var linkAcesso = $"{GetURLFrontend()}/autologin?acesso={chaveAcesso}";
 
                 return new ADMResultVM<string>().WithData(linkAcesso);
             }
@@ -354,6 +283,14 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 
                 throw new Exception(DetalheErro);
             }
+        }
+
+        private string GetURLFrontend()
+        {
+            if(string.IsNullOrEmpty(configAmbienteSDK.URLFrontend))
+                throw new Exception("Necessário informar a URL do frontend da AMIIntegra nas configurações do SDK.");
+
+            return configAmbienteSDK.URLFrontend.TrimEnd('/');
         }
     }
 }
