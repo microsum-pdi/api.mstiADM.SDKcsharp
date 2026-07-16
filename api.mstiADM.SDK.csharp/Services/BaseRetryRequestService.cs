@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using api.mstiADM.SDK.csharp.Resources;
 using api.mstiADM.SDK.csharp.ViewModels.Config;
 using Newtonsoft.Json;
 
@@ -17,7 +17,7 @@ namespace api.mstiADM.SDK.csharp.Services
 
         public BaseRetryRequestService(ConfigAmbienteSDK _configAmbienteSDK)
         {
-            Trace.Assert(_configAmbienteSDK == null, ConfigAmbienteSDK.DEFAULT_MESSAGE_CONFIG_REQUIRED);
+            MstiAssert.Check(_configAmbienteSDK, ConfigAmbienteSDK.DEFAULT_MESSAGE_CONFIG_REQUIRED);
 
             configAmbienteSDK = _configAmbienteSDK;
 
