@@ -1,9 +1,11 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 namespace api.mstiADM.SDK.csharp.ViewModels.Config
 {
     public class ConfigAmbienteSDK
     {
+        public static readonly string DEFAULT_MESSAGE_CONFIG_REQUIRED = "Necessário executar a configuração do ambiente (ConfigAmbienteSDKServices.ConfigurarAmbiente(new ConfigAmbienteSDK())), antes de comunicar com a AMIntegra.";
         /// <summary>
         /// Token de acesso do cliente da API.
         /// </summary>
@@ -20,6 +22,11 @@ namespace api.mstiADM.SDK.csharp.ViewModels.Config
         public string URLFrontend { get; set; }
 
         /// <summary>
+        /// Número máximo de retentativas de requisição, ao receber HttpStatusCode 429.
+        /// </summary>
+        public int MaxRetries { get; set; } = 3;
+
+        /// <summary>
         /// Http client do consumidor
         /// </summary>
         public HttpClient HttpClient { get; set; }
@@ -31,6 +38,12 @@ namespace api.mstiADM.SDK.csharp.ViewModels.Config
             Token = token;
             URL = url;
             URLFrontend = urlFrontend;
+        }
+
+        public void VerificaConfiguracaoAmbiente()
+        {
+            if (string.IsNullOrEmpty(Token) || string.IsNullOrEmpty(URL))
+                throw new Exception(DEFAULT_MESSAGE_CONFIG_REQUIRED);
         }
     }
 }
