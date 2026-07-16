@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\api.mstiADM.SDK.csharp\api.mstiADM.SDK.csharp.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -14,26 +14,20 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
 {
     public class TabelasPadroesServices : GenericServices, ITabelasPadroesServices
     {
-        public TabelasPadroesServices(ConfigAmbienteSDK configAmbienteSDK) : base(configAmbienteSDK)
-        {
-        }
+        public TabelasPadroesServices(ConfigAmbienteSDK configAmbienteSDK) : base(configAmbienteSDK) { }
 
         /// <summary>
         /// Verifica se o código está cadastrado na respectiva tabela padrão
         /// </summary>
         public async Task<bool> VerificaExistenciaRegistro(ENomeTabela tabela, string codigo)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/TabelasPadroes/verificaexistencia/{tabela}/{codigo}";
+            var url = $"{configAmbienteSDK.URL}/admui/api/TabelasPadroes/verificaexistencia/{tabela}/{codigo}";
 
             try
             {
-                HttpResponseMessage response = await ExecutaGet(url);
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<bool>(responseBody);                
-
-                return resposta;
+                var response = await ExecutaGet(url);
+                var responseBody = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<bool>(responseBody);                
             }
             catch (Exception ex)
             {
@@ -55,30 +49,20 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
         /// </remarks>
         public async Task<ADMResultVM<TABPDCheckAndUpdateResponseVM>> GetAtualizacoes(List<TABPDCheckAndUpdateRequestVM> request)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/tabelaspadroes/atualizacao";
-
-            ADMResultVM<TABPDCheckAndUpdateResponseVM> result = new ADMResultVM<TABPDCheckAndUpdateResponseVM>();
+            var url = $"{configAmbienteSDK.URL}/admui/api/tabelaspadroes/atualizacao";
 
             try
             {
-                HttpResponseMessage response = await ExecutaPost(request, url);
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-
+                var response = await ExecutaPost(request, url);
+                var responseBody = await response.Content.ReadAsStringAsync();
                 var resposta = JsonConvert.DeserializeObject<ADMResultVM<TABPDCheckAndUpdateResponseVM>>(responseBody);
 
                 if (resposta == null)
-                {
-                    result
+                    new ADMResultVM<TABPDCheckAndUpdateResponseVM>()
                         .WithStatusCode(ADMEHttpStatusCode.BadRequest)
                         .WithMessage("Não foi possível verificar a necessidade de atualização das tabelas padrões.");
-                }
-                else
-                {
-                    result = resposta;
-                }
 
-                return result;
+                return resposta;
             }
             catch (Exception ex)
             {
@@ -128,24 +112,17 @@ namespace api.mstiADM.SDK.csharp.Services.TabelasPadroes
         ///  | Outros (Genéricos)                | TABPDBaseVM                                      |
         /// </remarks>
         /// <returns>Retorna os dados da tabela solicitada</returns>
-        public async Task<ADMResultVM<T>> GetAtualizacoes<T>(ENomeTabela tabela, int sysver = 0, int limit = 0, int skip = 0)
+        public async Task<ADMResultVM<T>> GetAtualizacoes<T>(ENomeTabela tabela, int sysver = 0, int limit = 100, int skip = 0)
         {
-            string url = configAmbienteSDK.URL + $"/admui/api/tabelaspadroes/atualizacao/{tabela}/{sysver}?limit={limit}&skip={skip}";
+            var url = $"{configAmbienteSDK.URL}/admui/api/tabelaspadroes/atualizacao/{tabela}/{sysver}?limit={limit}&skip={skip}";
 
             try
             {
-                HttpResponseMessage response = await ExecutaGet(url);
+                var response = await ExecutaGet(url);
+                var json = await response.Content.ReadAsStringAsync();
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                var resposta = JsonConvert.DeserializeObject<ADMResultVM<T>>(responseBody);
-
-                if (resposta != null)
-                {                    
-                    return resposta;
-                }
-
-                return default;
+                if (string.IsNullOrEmpty(json)) return default;
+                return JsonConvert.DeserializeObject<ADMResultVM<T>>(json);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -74,11 +75,32 @@ namespace api.mstiADM.SDK.csharp.Services
 
         private int GetRetryAfterFromHeaders(HttpResponseMessage response)
         {
+            const int MAX_ALLOWED_RETRY_DELAY_SECONDS = 60; // # 1 minutos.
+
             if (response.Headers.TryGetValues("Retry-After", out IEnumerable<string> values))
             {
-                if (double.TryParse(values.FirstOrDefault(), out double retryAfter))
+                var rawValue = values.FirstOrDefault();
+                if (string.IsNullOrEmpty(rawValue)) return -1;
+
+                if (double.TryParse(rawValue, NumberStyles.Any, CultureInfo.InvariantCulture, out double retryAfterSeconds))
                 {
-                    return (int)Math.Ceiling(retryAfter);
+                    if (retryAfterSeconds > MAX_ALLOWED_RETRY_DELAY_SECONDS)
+                        return MAX_ALLOWED_RETRY_DELAY_SECONDS;
+
+                    return (int)Math.Ceiling(retryAfterSeconds);
+                }
+
+                if (DateTimeOffset.TryParse(rawValue, out DateTimeOffset retryAfterDate))
+                {
+                    var delay = retryAfterDate - DateTimeOffset.UtcNow;
+                    var seconds = delay.TotalSeconds;
+
+                    if (seconds > 0)
+                    {
+                        return seconds > MAX_ALLOWED_RETRY_DELAY_SECONDS
+                                       ? MAX_ALLOWED_RETRY_DELAY_SECONDS
+                                       : (int)Math.Ceiling(seconds);
+                    }
                 }
             }
 
