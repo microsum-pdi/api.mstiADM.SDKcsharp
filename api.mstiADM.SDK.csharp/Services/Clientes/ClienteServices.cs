@@ -101,9 +101,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
 
             try
             {
-                var request = new HttpRequestMessage(HttpMethod.Put, url) { Content = content };
-                request.Headers.Add("x-api-key", configAmbienteSDK.Token);
-                var response = await configAmbienteSDK.HttpClient.SendAsync(request);
+                var response = await ExecutaPutMultiPartFormAsync(url, content);
                 var json = await response.Content.ReadAsStringAsync();
 
                 if (string.IsNullOrEmpty(json))

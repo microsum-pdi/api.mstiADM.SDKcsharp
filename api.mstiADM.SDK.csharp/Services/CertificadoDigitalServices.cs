@@ -11,9 +11,7 @@ namespace api.mstiADM.SDK.csharp.Services
             try
             {
                 byte[] decodedByteArray = Convert.FromBase64String(CertificadoBase64);
-
                 var certificate = new X509Certificate2(decodedByteArray, Senha);
-
                 return certificate;
             }
             catch (Exception ex)
@@ -22,9 +20,6 @@ namespace api.mstiADM.SDK.csharp.Services
                                     $"api.mstiADM.SDK.csharp.Services.CertificadoDigitalServices.getX509Certificate2()\n" +
                                     "StackTrace: " + ex?.StackTrace + "\n" +
                                     "Message: " + ex.ADMGetAllInnerExceptionsMessage());
-                
-
-                throw;
             }
         }
     }
