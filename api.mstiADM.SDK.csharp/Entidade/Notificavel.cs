@@ -14,7 +14,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
     {
         [IgnoreDataMember]
         [JsonIgnore]
-        public bool Invalid { get { return this.Notifications.Count > 0; } }
+        public bool Invalid { get { return Notifications.Count > 0; } }
 
         [IgnoreDataMember]
         [JsonIgnore]
@@ -31,14 +31,7 @@ namespace api.mstiADM.SDK.csharp.Entidade
         /// <returns></returns>
         public List<string> NotificationsToList()
         {
-            List<string> lista = new List<string>();
-
-            lista.Clear();
-            foreach (var item in Notifications)
-            {
-                lista.Add(item.Key + ": " + item.Message);
-            }
-            return Notifications.Select(n => $"{n.Key}: {n.Message}").ToList();
+            return Notifications.Select(n => $"{n.Message}").ToList();
         }
     }
 }
