@@ -286,7 +286,7 @@ namespace api.mstiADM.SDK.csharp.Services.Clientes
         private string GetURLFrontend()
         {
             if(string.IsNullOrEmpty(configAmbienteSDK.URLFrontend))
-                throw new Exception("Necessário informar a URL do frontend da AMIIntegra nas configurações do SDK.");
+                throw new Exception("Necessário informar a URL do frontend da AMIntegra nas configurações do SDK.");
 
             return configAmbienteSDK.URLFrontend.TrimEnd('/');
         }
